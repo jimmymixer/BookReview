@@ -1,0 +1,103 @@
+////////////////////////////////////////////////////////////////////////////////
+
+rails new ProjectName
+rails g model Book title:string description:text auther:string
+rails g controller Books
+rails db:migrate (or) rake db:migrate
+
+// GEMFILE
+gem 'simple_form', '~> 3.5'
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+
+rails g simple_form:install --bootstrap
+
+// APPLICATION.CSS
+rename application.css to application.scss
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// APPLICATION.JS
+//= require bootstrap-sprockets
+
+// GEMFILE
+gem 'devise', '~> 4.3' (for the newest verison)
+not working...gem 'devise', '~> 3.5.1' (for the tutorial version)
+
+bundle install
+rails generate devise:install
+rails generate devise:views
+rails generate devise User
+
+rails db:migrate (or) rake db:migrate
+
+// Add user_id To Books
+rails generate migration add_user_id_to_books user_id:integer
+
+rails db:migrate (or) rake db:migrate
+
+// ADD NEW MODEL Category
+rails generate model Category name:string
+
+rails db:migrate (or) rake db:migrate
+
+// ADD category_id to BOOKs MODEL
+rails generate migration add_category_id_to_books category_id:integer
+
+rails db:migrate (or) rake db:migrate
+
+/// RAILS CONSOLE TO ADD NAMES TO CATEGORY
+rails c
+Category.create(name: "Fantasy")
+
+// RUBYGEMS.ORG FOR PAPERCLIP (IMG)
+gem 'paperclip', '~> 5.1'
+bundle install
+brew install imagemagick (must do this outside virenv/vagrant)
+imagemagic is already installed
+in Terminal(no env): which convert
+in config/environments/development.rb
+add:
+Paperclip.options[:command_path] = "/usr/local/bin/"
+
+in documentation look for quickstart for rails 4
+class User < ActiveRecord::Base
+...
+
+rails generate paperclip Book book_img
+
+rails db:migrate (or) rake db:migrate
+
+// ADD NEW MODEL Review
+rails generate model Review rating:integer comment:text
+
+rails db:migrate (or) rake db:migrate
+
+// ADD user_id to REVIEW
+rails generate migration add_user_id_to_reviews user_id:integer
+
+rails db:migrate (or) rake db:migrate
+
+// ADD book_id to REVIEW
+rails generate migration add_book_id_to_reviews book_id:integer
+
+rails db:migrate (or) rake db:migrate
+
+// CREATE REVIEWS CONTROLLER
+rails generate controller Reviews
+
+
+/// RAILS CONSOLE
+rails c
+@book = Book.first  # find the first book
+@book.user_id = 1  # assigning the user_id attribute the with user.id
+@book.save  # save the change
+
+@book = Book.find(2)
+@book.user_id = 1
+@book.save
+
+@book = Book.find(3)
+@book.user_id = 1
+@book.save
+
+////////////////////////////////////////////////////////////////////////////////
